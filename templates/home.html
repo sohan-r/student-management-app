@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Dashboard - Tailwebs</title>
   <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <!-- Navbar -->
@@ -29,18 +30,27 @@
       <tbody>
         {% for student in students %}
         <tr>
-          <td>{{ student.name }}</td>
+          <td>
+            <div class="student-info">
+              <div class="avatar">{{ student.name[0]|upper }}</div>
+              <span>{{ student.name }}</span>
+            </div>
+          </td>
           <td>{{ student.subject }}</td>
           <td>{{ student.marks }}</td>
           <td>
-          <button class="btn edit-btn"
-          onclick='openEditModal({{ student.id }}, {{ student.name | tojson }}, {{ student.subject | tojson }}, {{ student.marks }})'>
-          Edit
-          </button>
-
-          <form method="POST" action="/delete/{{ student.id }}" style="display:inline;">
-          <button class="btn delete-btn" type="submit">Delete</button>
-          </form>
+            <div class="dropdown">
+              <button class="dropbtn"><i class="fas fa-caret-down"></i></button>
+              <div class="dropdown-content">
+                <button type="button"
+                  onclick='openEditModal({{ student.id }}, {{ student.name | tojson }}, {{ student.subject | tojson }}, {{ student.marks }})'>
+                  <i class="fas fa-pen"></i> Edit
+                </button>
+                <form method="POST" action="/delete/{{ student.id }}">
+                  <button type="submit"><i class="fas fa-trash"></i> Delete</button>
+                </form>
+              </div>
+            </div>
           </td>
         </tr>
         {% endfor %}
@@ -48,7 +58,7 @@
     </table>
 
     <!-- Add Student Button -->
-    <button class="add-btn" onclick="openModal()">Add</button>
+    <button class="add-btn" onclick="openModal()"> Add</button>
   </div>
 
   <!-- Add Modal -->
@@ -56,13 +66,16 @@
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
       <form method="POST" action="/add">
-        <label>Name:</label>
+        <label><i class="fas fa-user"></i> Name:</label>
         <input type="text" name="name" required>
-        <label>Subject:</label>
+
+        <label><i class="fas fa-book"></i> Subject:</label>
         <input type="text" name="subject" required>
-        <label>Mark:</label>
+
+        <label><i class="fas fa-pen-nib"></i> Mark:</label>
         <input type="number" name="marks" required>
-        <button type="submit">Add</button>
+
+        <button type="submit"> Add</button>
       </form>
     </div>
   </div>
@@ -72,18 +85,20 @@
     <div class="modal-content">
       <span class="close" onclick="closeEditModal()">&times;</span>
       <form id="editForm" method="POST">
-        <label>Name:</label>
+        <label><i class="fas fa-user"></i> Name:</label>
         <input type="text" name="name" id="editName" required>
-        <label>Subject:</label>
+
+        <label><i class="fas fa-book"></i> Subject:</label>
         <input type="text" name="subject" id="editSubject" required>
-        <label>Mark:</label>
+
+        <label><i class="fas fa-pen-nib"></i> Mark:</label>
         <input type="number" name="marks" id="editMarks" required>
-        <button type="submit">Update</button>
+
+        <button type="submit"> Update</button>
       </form>
     </div>
   </div>
 
-  <!-- Script -->
   <script src="/static/js/main.js"></script>
 </body>
 </html>

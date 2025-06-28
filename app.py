@@ -38,15 +38,20 @@ def add_student():
     name = request.form['name']
     subject = request.form['subject']
     marks = int(request.form['marks'])
+    
     conn = get_db_connection()
     existing = conn.execute("SELECT * FROM students WHERE name=? AND subject=?", (name, subject)).fetchone()
+    
     if existing:
-        conn.execute("UPDATE students SET marks = marks + ? WHERE name=? AND subject=?", (marks, name, subject))
+        # Replace marks instead of adding
+        conn.execute("UPDATE students SET marks = ? WHERE name=? AND subject=?", (marks, name, subject))
     else:
         conn.execute("INSERT INTO students (name, subject, marks) VALUES (?, ?, ?)", (name, subject, marks))
+    
     conn.commit()
     conn.close()
     return redirect('/home')
+
 
 @app.route('/edit/<int:id>', methods=['POST'])
 def edit_student(id):
