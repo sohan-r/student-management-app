@@ -1,5 +1,4 @@
-**📄 static/js/main.js**
-```javascript
+
 function openModal() {
   document.getElementById("studentModal").style.display = "block";
 }
