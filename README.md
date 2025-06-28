@@ -25,3 +25,7 @@ python app.py
 6. Visit in Browser
 Go to:
 http://127.0.0.1:5000
+
+Login credentials:
+username:admin
+password:admin123
