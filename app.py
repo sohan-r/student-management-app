@@ -50,8 +50,20 @@ def add_student():
 
 @app.route('/edit/<int:id>', methods=['POST'])
 def edit_student(id):
-    # Placeholder for edit logic
+    name = request.form['name']
+    subject = request.form['subject']
+    marks = int(request.form['marks'])
+
+    conn = get_db_connection()
+    conn.execute('''
+        UPDATE students
+        SET name = ?, subject = ?, marks = ?
+        WHERE id = ?
+    ''', (name, subject, marks, id))
+    conn.commit()
+    conn.close()
     return redirect('/home')
+
 
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_student(id):

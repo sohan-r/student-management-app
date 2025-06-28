@@ -177,3 +177,28 @@ th, td {
   margin-top: 10px;
   text-align: center;
 }
+.btn {
+  padding: 5px 10px;
+  margin: 0 2px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background-color: #28a745; /* green */
+}
+
+.delete-btn {
+  background-color: #dc3545; /* red */
+}
+
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}

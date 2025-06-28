@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+  <!-- Navbar -->
   <div class="navbar">
     <div class="logo">tailwebs.</div>
     <div class="nav-links">
@@ -14,6 +15,7 @@
     </div>
   </div>
 
+  <!-- Student Table -->
   <div class="container">
     <table>
       <thead>
@@ -31,26 +33,25 @@
           <td>{{ student.subject }}</td>
           <td>{{ student.marks }}</td>
           <td>
-            <div class="dropdown">
-              <button class="dropbtn">⋮</button>
-              <div class="dropdown-content">
-                <form method="POST" action="/edit/{{ student.id }}">
-                  <button type="submit">Edit</button>
-                </form>
-                <form method="POST" action="/delete/{{ student.id }}">
-                  <button type="submit">Delete</button>
-                </form>
-              </div>
-            </div>
+          <button class="btn edit-btn"
+          onclick='openEditModal({{ student.id }}, {{ student.name | tojson }}, {{ student.subject | tojson }}, {{ student.marks }})'>
+          Edit
+          </button>
+
+          <form method="POST" action="/delete/{{ student.id }}" style="display:inline;">
+          <button class="btn delete-btn" type="submit">Delete</button>
+          </form>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
 
+    <!-- Add Student Button -->
     <button class="add-btn" onclick="openModal()">Add</button>
   </div>
 
+  <!-- Add Modal -->
   <div id="studentModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -66,7 +67,23 @@
     </div>
   </div>
 
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditModal()">&times;</span>
+      <form id="editForm" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" id="editName" required>
+        <label>Subject:</label>
+        <input type="text" name="subject" id="editSubject" required>
+        <label>Mark:</label>
+        <input type="number" name="marks" id="editMarks" required>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script -->
   <script src="/static/js/main.js"></script>
 </body>
 </html>
-```
