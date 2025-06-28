@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Teacher Dashboard</title>
-  <link rel="stylesheet" href="/static/css/styles.css" />
+  <meta charset="UTF-8">
+  <title>Dashboard - Tailwebs</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
   <div class="navbar">
@@ -24,7 +24,7 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody id="studentTableBody">
+      <tbody>
         {% for student in students %}
         <tr>
           <td>{{ student.name }}</td>
@@ -51,17 +51,16 @@
     <button class="add-btn" onclick="openModal()">Add</button>
   </div>
 
-  <!-- Add/Edit Modal -->
   <div id="studentModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
       <form method="POST" action="/add">
         <label>Name:</label>
-        <input type="text" name="name" required />
+        <input type="text" name="name" required>
         <label>Subject:</label>
-        <input type="text" name="subject" required />
+        <input type="text" name="subject" required>
         <label>Mark:</label>
-        <input type="number" name="marks" required />
+        <input type="number" name="marks" required>
         <button type="submit">Add</button>
       </form>
     </div>
@@ -70,3 +69,4 @@
   <script src="/static/js/main.js"></script>
 </body>
 </html>
+```

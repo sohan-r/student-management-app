@@ -1,25 +1,29 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - tailwebs.</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>Login - Tailwebs</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-  <div class="container login-box">
-    <h1 class="brand">tailwebs.</h1>
-    <form method="POST" action="/login">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Enter your username" required>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>tailwebs.</h1>
+      <form method="POST" action="/">
+        <label for="username">Username</label>
+        <input type="text" name="username" required>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" required>
 
-      <div class="forgot"><a href="#">Forgot Password?</a></div>
-
-      <button type="submit">Login</button>
-    </form>
+        <div class="actions">
+          <button type="submit">Login</button>
+          <a href="#">Forgot Password?</a>
+        </div>
+      </form>
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    </div>
   </div>
 </body>
 </html>
+```
