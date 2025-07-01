@@ -1,13 +1,16 @@
-🚀 Getting Started
+Getting Started
+
 Follow these steps to run the project locally on your machine.
 
-✅ Prerequisites
+Prerequisites
+
 Make sure you have the following installed:
 Python 3.8+
 pip (Python package manager)
 (Optional) virtualenv for isolated environments
 
-⚙️ Setup Instructions
+Setup Instructions
+
 1. Clone the Repository
 git clone https://github.com/sohan-r/student-management-app
 cd student-management-app
