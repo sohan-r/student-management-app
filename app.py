@@ -38,36 +38,73 @@ def add_student():
     name = request.form['name']
     subject = request.form['subject']
     marks = int(request.form['marks'])
-    
+
     conn = get_db_connection()
-    existing = conn.execute("SELECT * FROM students WHERE name=? AND subject=?", (name, subject)).fetchone()
-    
+
+    # Check if student with same name and subject exists
+    existing = conn.execute(
+        "SELECT * FROM students WHERE name = ? AND subject = ?",
+        (name, subject)
+    ).fetchone()
+
     if existing:
-        # Replace marks instead of adding
-        conn.execute("UPDATE students SET marks = ? WHERE name=? AND subject=?", (marks, name, subject))
+        # Add new marks to existing marks
+        updated_marks = existing['marks'] + marks
+        conn.execute(
+            "UPDATE students SET marks = ? WHERE id = ?",
+            (updated_marks, existing['id'])
+        )
     else:
-        conn.execute("INSERT INTO students (name, subject, marks) VALUES (?, ?, ?)", (name, subject, marks))
-    
+        # Insert new record
+        conn.execute(
+            "INSERT INTO students (name, subject, marks) VALUES (?, ?, ?)",
+            (name, subject, marks)
+        )
+
     conn.commit()
     conn.close()
     return redirect('/home')
+
 
 
 @app.route('/edit/<int:id>', methods=['POST'])
 def edit_student(id):
     name = request.form['name']
     subject = request.form['subject']
-    marks = int(request.form['marks'])
+    new_marks = int(request.form['marks'])
 
     conn = get_db_connection()
-    conn.execute('''
-        UPDATE students
-        SET name = ?, subject = ?, marks = ?
-        WHERE id = ?
-    ''', (name, subject, marks, id))
+
+    # Get current record's marks
+    current = conn.execute('SELECT * FROM students WHERE id = ?', (id,)).fetchone()
+    if not current:
+        conn.close()
+        return redirect('/home')
+
+    # Check for existing record with same name+subject but different ID
+    existing = conn.execute('''
+        SELECT * FROM students 
+        WHERE name = ? AND subject = ? AND id != ?
+    ''', (name, subject, id)).fetchone()
+
+    if existing:
+        # Combine marks from current and existing records
+        total_marks = existing['marks'] + new_marks
+        conn.execute('UPDATE students SET marks = ? WHERE id = ?', (total_marks, existing['id']))
+        # Delete the current record
+        conn.execute('DELETE FROM students WHERE id = ?', (id,))
+    else:
+        # Update the current record normally
+        conn.execute('''
+            UPDATE students
+            SET name = ?, subject = ?, marks = ?
+            WHERE id = ?
+        ''', (name, subject, new_marks, id))
+
     conn.commit()
     conn.close()
     return redirect('/home')
+
 
 
 @app.route('/delete/<int:id>', methods=['POST'])
